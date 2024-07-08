@@ -63,6 +63,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(e.getStatus()).body(problemDetail);
     }
 
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<ProblemDetail> authorizationException(AuthorizationException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(e.getStatus());
+        problemDetail.setTitle(e.getTitle());
+        problemDetail.setDetail(e.getMessage());
+        return ResponseEntity.status(e.getStatus()).body(problemDetail);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ProblemDetail> exception(Exception e) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
